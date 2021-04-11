@@ -29,8 +29,6 @@ import java.util.ServiceLoader;
 /**
  * 注入需要的bean
  *
- * @author 2YSP
- * @date 2020/7/25 19:43
  */
 @Configuration
 @EnableConfigurationProperties(RpcConfig.class)
