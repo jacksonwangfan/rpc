@@ -9,9 +9,6 @@ import com.dyuproject.protostuff.runtime.RuntimeSchema;
 
 /**
  * protostuff工具类
- *
- * @author Ship
- * @date 2020-08-05 14:53
  */
 public class SerializingUtil {
 

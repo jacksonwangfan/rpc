@@ -2,8 +2,6 @@ package com.rpc.server;
 
 /**
  * Rpc服务端抽象类
- * @author 2YSP
- * @date 2020/7/26 14:04
  */
 public abstract class RpcServer {
 
