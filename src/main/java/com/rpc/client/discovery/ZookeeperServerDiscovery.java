@@ -14,7 +14,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
- * 从zookeeper获取服务信心，
+ * 从zookeeper获取服务信息
  */
 public class ZookeeperServerDiscovery implements ServerDiscovery {
 

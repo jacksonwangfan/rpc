@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 
 /**
- * 子节点事件监听处理类
+ * 子节点事件监听处理类，及时剔除已经宕机的服务，当子节点数据发生变化时，清空本地缓存，重新从服务端拉取最新的服务信息
  */
 public class ZkChildListenerImpl implements IZkChildListener {
 

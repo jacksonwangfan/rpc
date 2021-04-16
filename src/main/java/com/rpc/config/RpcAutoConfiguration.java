@@ -21,6 +21,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.Assert;
 
+import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -33,6 +34,9 @@ import java.util.ServiceLoader;
 @Configuration
 @EnableConfigurationProperties(RpcConfig.class)
 public class RpcAutoConfiguration {
+
+    @Resource
+    private RpcConfig rpcConfig;
 
     @Bean
     public RpcConfig rpcConfig() {
@@ -63,19 +67,18 @@ public class RpcAutoConfiguration {
 
     /**
      * 配置客户端代理的实现
-     * @param rpcConfig
      * @return
      */
     @Bean
-    public ClientProxyFactory proxyFactory(@Autowired RpcConfig rpcConfig) {
+    public ClientProxyFactory proxyFactory() {
         ClientProxyFactory clientProxyFactory = new ClientProxyFactory();
         // 设置服务发现着
-        clientProxyFactory.setServerDiscovery(new ZookeeperServerDiscovery(rpcConfig.getRegisterAddress()));
+        clientProxyFactory.setServerDiscovery(new ZookeeperServerDiscovery(this.rpcConfig.getRegisterAddress()));
         // SPI机制设置支持的协议
         Map<String, MessageProtocol> supportMessageProtocols = buildSupportMessageProtocols();
         clientProxyFactory.setSupportMessageProtocols(supportMessageProtocols);
         // 设置负载均衡算法
-        LoadBalance loadBalance = getLoadBalance(rpcConfig.getLoadBalance());
+        LoadBalance loadBalance = getLoadBalance(this.rpcConfig.getLoadBalance());
         clientProxyFactory.setLoadBalance(loadBalance);
         // 设置网络层实现
         clientProxyFactory.setNetClient(new NettyNetClient());
