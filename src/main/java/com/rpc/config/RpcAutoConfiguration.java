@@ -34,9 +34,6 @@ import java.util.ServiceLoader;
 @EnableConfigurationProperties(RpcConfig.class)
 public class RpcAutoConfiguration {
 
-
-
-
     @Bean
     public RpcConfig rpcConfig() {
         return new RpcConfig();

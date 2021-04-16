@@ -17,8 +17,6 @@ import java.util.List;
 
 /**
  * Java序列化消息协议
- * @author 2YSP
- * @date 2020/7/25 21:07
  */
 @MessageProtocolAno(RpcConstant.PROTOCOL_JAVA)
 public class JavaSerializeMessageProtocol implements MessageProtocol {
