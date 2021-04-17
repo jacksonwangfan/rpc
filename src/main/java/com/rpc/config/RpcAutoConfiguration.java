@@ -35,9 +35,6 @@ import java.util.ServiceLoader;
 @EnableConfigurationProperties(RpcConfig.class)
 public class RpcAutoConfiguration {
 
-    @Resource
-    private RpcConfig rpcConfig;
-
     @Bean
     public RpcConfig rpcConfig() {
         return new RpcConfig();
@@ -70,15 +67,15 @@ public class RpcAutoConfiguration {
      * @return
      */
     @Bean
-    public ClientProxyFactory proxyFactory() {
+    public ClientProxyFactory proxyFactory(@Autowired RpcConfig rpcConfig) {
         ClientProxyFactory clientProxyFactory = new ClientProxyFactory();
         // 设置服务发现着
-        clientProxyFactory.setServerDiscovery(new ZookeeperServerDiscovery(this.rpcConfig.getRegisterAddress()));
+        clientProxyFactory.setServerDiscovery(new ZookeeperServerDiscovery(rpcConfig.getRegisterAddress()));
         // SPI机制设置支持的协议
         Map<String, MessageProtocol> supportMessageProtocols = buildSupportMessageProtocols();
         clientProxyFactory.setSupportMessageProtocols(supportMessageProtocols);
         // 设置负载均衡算法
-        LoadBalance loadBalance = getLoadBalance(this.rpcConfig.getLoadBalance());
+        LoadBalance loadBalance = getLoadBalance(rpcConfig.getLoadBalance());
         clientProxyFactory.setLoadBalance(loadBalance);
         // 设置网络层实现
         clientProxyFactory.setNetClient(new NettyNetClient());
