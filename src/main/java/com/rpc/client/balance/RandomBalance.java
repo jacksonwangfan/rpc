@@ -1,6 +1,6 @@
 package com.rpc.client.balance;
 
-import com.rpc.annotation.LoadBalanceAno;
+import com.rpc.annotation.LoadBalance;
 import com.rpc.common.constants.RpcConstant;
 import com.rpc.common.model.Service;
 
@@ -10,8 +10,8 @@ import java.util.Random;
 /**
  * 随机算法
  */
-@LoadBalanceAno(RpcConstant.BALANCE_RANDOM)
-public class RandomBalance implements LoadBalance{
+@LoadBalance(RpcConstant.BALANCE_RANDOM)
+public class RandomBalance implements com.rpc.client.balance.LoadBalance {
 
     private static Random random = new Random();
 

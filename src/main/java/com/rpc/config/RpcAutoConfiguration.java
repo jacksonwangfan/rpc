@@ -1,8 +1,7 @@
 package com.rpc.config;
 
-import com.rpc.annotation.LoadBalanceAno;
+import com.rpc.annotation.LoadBalance;
 import com.rpc.annotation.MessageProtocolAno;
-import com.rpc.client.balance.LoadBalance;
 import com.rpc.client.discovery.ZookeeperServerDiscovery;
 import com.rpc.client.net.ClientProxyFactory;
 import com.rpc.client.net.NettyNetClient;
@@ -21,7 +20,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.Assert;
 
-import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -75,7 +73,7 @@ public class RpcAutoConfiguration {
         Map<String, MessageProtocol> supportMessageProtocols = buildSupportMessageProtocols();
         clientProxyFactory.setSupportMessageProtocols(supportMessageProtocols);
         // 设置负载均衡算法
-        LoadBalance loadBalance = getLoadBalance(rpcConfig.getLoadBalance());
+        com.rpc.client.balance.LoadBalance loadBalance = getLoadBalance(rpcConfig.getLoadBalance());
         clientProxyFactory.setLoadBalance(loadBalance);
         // 设置网络层实现
         clientProxyFactory.setNetClient(new NettyNetClient());
@@ -122,12 +120,12 @@ public class RpcAutoConfiguration {
      * @param name
      * @return
      */
-    private LoadBalance getLoadBalance(String name) {
-        ServiceLoader<LoadBalance> loader = ServiceLoader.load(LoadBalance.class);
-        Iterator<LoadBalance> iterator = loader.iterator();
+    private com.rpc.client.balance.LoadBalance getLoadBalance(String name) {
+        ServiceLoader<com.rpc.client.balance.LoadBalance> loader = ServiceLoader.load(com.rpc.client.balance.LoadBalance.class);
+        Iterator<com.rpc.client.balance.LoadBalance> iterator = loader.iterator();
         while (iterator.hasNext()) {
-            LoadBalance loadBalance = iterator.next();
-            LoadBalanceAno ano = loadBalance.getClass().getAnnotation(LoadBalanceAno.class);
+            com.rpc.client.balance.LoadBalance loadBalance = iterator.next();
+            LoadBalance ano = loadBalance.getClass().getAnnotation(LoadBalance.class);
             Assert.notNull(ano, "load balance name can not be empty!");
             if (name.equals(ano.value())) {
                 return loadBalance;

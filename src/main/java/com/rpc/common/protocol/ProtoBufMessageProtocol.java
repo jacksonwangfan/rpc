@@ -8,8 +8,6 @@ import com.rpc.util.SerializingUtil;
 
 /**
  * Protobuf序列化协议
- * @author 2YSP
- * @date 2020/8/5 21:22
  */
 @MessageProtocolAno(RpcConstant.PROTOCOL_PROTOBUF)
 public class ProtoBufMessageProtocol implements MessageProtocol{

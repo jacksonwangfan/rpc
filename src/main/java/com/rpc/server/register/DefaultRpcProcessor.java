@@ -1,6 +1,6 @@
 package com.rpc.server.register;
 
-import com.rpc.annotation.InjectService;
+import com.rpc.annotation.RpcService;
 import com.rpc.annotation.Service;
 import com.rpc.client.cache.ServerDiscoveryCache;
 import com.rpc.client.discovery.ZkChildListenerImpl;
@@ -67,8 +67,8 @@ public class DefaultRpcProcessor implements ApplicationListener<ContextRefreshed
             Field[] declaredFields = clazz.getDeclaredFields();
             for (Field field : declaredFields) {
                 // 找出标记了InjectService注解的属性
-                InjectService injectService = field.getAnnotation(InjectService.class);
-                if (injectService == null) {
+                RpcService rpcService = field.getAnnotation(RpcService.class);
+                if (rpcService == null) {
                     continue;
                 }
                 Class<?> fieldClass = field.getType();

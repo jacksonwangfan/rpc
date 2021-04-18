@@ -7,8 +7,6 @@ import java.nio.charset.StandardCharsets;
 
 /**
  * zk序列化器
- * @author 2YSP
- * @date 2020/7/25 19:53
  */
 public class ZookeeperSerializer implements ZkSerializer {
     /**

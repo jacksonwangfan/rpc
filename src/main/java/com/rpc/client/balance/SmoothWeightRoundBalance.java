@@ -1,6 +1,6 @@
 package com.rpc.client.balance;
 
-import com.rpc.annotation.LoadBalanceAno;
+import com.rpc.annotation.LoadBalance;
 import com.rpc.common.constants.RpcConstant;
 import com.rpc.common.model.Service;
 
@@ -12,8 +12,8 @@ import java.util.Map;
 /**
  * 平滑加权轮询
  */
-@LoadBalanceAno(RpcConstant.BALANCE_SMOOTH_WEIGHT_ROUND)
-public class SmoothWeightRoundBalance implements LoadBalance {
+@LoadBalance(RpcConstant.BALANCE_SMOOTH_WEIGHT_ROUND)
+public class SmoothWeightRoundBalance implements com.rpc.client.balance.LoadBalance {
     /**
      * key:服务value:当前权重
      */
@@ -68,7 +68,7 @@ public class SmoothWeightRoundBalance implements LoadBalance {
         service3.setWeight(5);
         services.add(service3);
 
-        LoadBalance loadBalance = new SmoothWeightRoundBalance();
+        com.rpc.client.balance.LoadBalance loadBalance = new SmoothWeightRoundBalance();
         System.out.println("20次请求负载均衡结果为:");
         for(int i=1;i<=20;i++){
             System.out.println("第"+i+"次请求服务ip为："+loadBalance.chooseOne(services).getAddress());

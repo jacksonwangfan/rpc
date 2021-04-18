@@ -8,7 +8,7 @@ import java.lang.annotation.*;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface LoadBalanceAno {
+public @interface LoadBalance {
 
     String value() default "";
 }
