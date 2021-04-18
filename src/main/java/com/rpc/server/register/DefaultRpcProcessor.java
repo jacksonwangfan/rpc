@@ -97,6 +97,7 @@ public class DefaultRpcProcessor implements ApplicationListener<ContextRefreshed
 
     private void startServer(ApplicationContext context) {
         Map<String, Object> beans = context.getBeansWithAnnotation(Service.class);
+        logger.info("发现"+beans.size()+"个RpcServices");
         if (beans.size() > 0) {
             boolean startServerFlag = true;
             for (Object obj : beans.values()) {
@@ -120,13 +121,13 @@ public class DefaultRpcProcessor implements ApplicationListener<ContextRefreshed
                         Class<?> supperClass = interfaces[0];
                         so = new ServiceObject(supperClass.getName(), supperClass, obj);
                     }
+                    logger.info("准备注册"+so.getClazz().getName());
                     serverRegister.register(so);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
 
             }
-
             if (startServerFlag) {
                 rpcServer.start();
             }

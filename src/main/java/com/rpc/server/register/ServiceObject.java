@@ -4,6 +4,15 @@ package com.rpc.server.register;
  * 服务持有对象，保存具体的服务信息备用
  */
 public class ServiceObject {
+    @Override
+    public String toString() {
+        return "ServiceObject{" +
+                "name='" + name + '\'' +
+                ", clazz=" + clazz +
+                ", obj=" + obj +
+                '}';
+    }
+
     /**
      *
      * 服务名称

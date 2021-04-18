@@ -8,6 +8,8 @@ import com.rpc.common.protocol.MessageProtocol;
 import com.rpc.common.model.RpcRequest;
 import com.rpc.common.model.RpcResponse;
 import com.rpc.exception.RpcException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -22,6 +24,8 @@ import java.util.UUID;
  * 封装请求序列化、请求发送、响应序列化等操作
  */
 public class ClientProxyFactory {
+
+    private static final Logger logger = LoggerFactory.getLogger(ClientProxyFactory.class);
 
     //服务发现
     private ServerDiscovery serverDiscovery;
@@ -115,6 +119,7 @@ public class ClientProxyFactory {
             if (ServerDiscoveryCache.isEmpty(serviceName)) {
                 //缓存没有再去，zookeeper取出服务信息
                 services = serverDiscovery.findServiceListByRegisterCenter(serviceName);
+                logger.info("从服务注册中心已获取服务{}",services.toArray());
                 if (services == null || services.size() == 0) {
                     throw new RpcException("No provider available!");
                 }
@@ -124,6 +129,7 @@ public class ClientProxyFactory {
                 services = ServerDiscoveryCache.get(serviceName);
             }
         }
+        logger.info("获取到服务{}",services.toArray());
         return services;
     }
 

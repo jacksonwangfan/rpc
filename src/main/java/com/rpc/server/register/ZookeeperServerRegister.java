@@ -5,6 +5,8 @@ import com.rpc.common.serializer.ZookeeperSerializer;
 import com.alibaba.fastjson.JSON;
 import com.rpc.common.constants.RpcConstant;
 import org.I0Itec.zkclient.ZkClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
@@ -15,6 +17,8 @@ import java.net.URLEncoder;
  *
  */
 public class ZookeeperServerRegister extends DefaultServerRegister {
+
+    private static final Logger logger = LoggerFactory.getLogger(ZookeeperServerRegister.class);
 
     private ZkClient zkClient;
 
@@ -62,14 +66,17 @@ public class ZookeeperServerRegister extends DefaultServerRegister {
         if (!zkClient.exists(servicePath)) {
             // 没有该节点就创建
             zkClient.createPersistent(servicePath, true);
+            logger.info("节点已创建：{}",servicePath);
         }
 
         String uriPath = servicePath + RpcConstant.PATH_DELIMITER + uri;
         if (zkClient.exists(uriPath)) {
             // 删除之前的节点
+            logger.info("之前的节点已经清除:{}",uriPath);
             zkClient.delete(uriPath);
         }
         // 创建一个临时节点，会话失效即被清理
         zkClient.createEphemeral(uriPath);
+        logger.info("创建一个临时节点：{}",uriPath);
     }
 }
