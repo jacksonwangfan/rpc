@@ -34,6 +34,8 @@ public class MyProxy implements InvocationHandler {
     }
 
     public static void main(String[] args) {
+        long l = System.currentTimeMillis();
+        System.out.println(l);
         MyProxy myProxy = new MyProxy(new Cat());
         Animal animal = (Animal) myProxy.getInstence();
         animal.run();

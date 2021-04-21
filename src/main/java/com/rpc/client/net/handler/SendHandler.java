@@ -11,8 +11,7 @@ import org.slf4j.LoggerFactory;
 import java.util.concurrent.CountDownLatch;
 
 /**
- *
- *  发送处理类，定义Netty入站处理细则
+ *  发送处理类
  */
 public class SendHandler extends ChannelInboundHandlerAdapter {
 

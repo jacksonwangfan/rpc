@@ -21,13 +21,18 @@ public class SmoothWeightRoundBalance implements com.rpc.client.balance.LoadBala
 
     @Override
     public synchronized Service chooseOne(List<Service> services) {
+        //todo 这里加权轮训，每次只用算一次，然后将计算出来的加权轮训结果缓存起来，不用选则实例的时候都计算一次，浪费性能。
+        //将服务以及权重放入map
         services.forEach(service ->
                 map.computeIfAbsent(service.toString(), key -> service.getWeight())
         );
+        //加权轮训得到的结果
         Service maxWeightServer = null;
+        //同一个服务所有实例权重的和
         int allWeight = services.stream().mapToInt(Service::getWeight).sum();
         for (Service service : services) {
             Integer currentWeight = map.get(service.toString());
+
             if (maxWeightServer == null || currentWeight > map.get(maxWeightServer.toString())) {
                 maxWeightServer = service;
             }

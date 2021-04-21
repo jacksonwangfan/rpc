@@ -12,7 +12,5 @@ import com.rpc.common.model.RpcResponse;
  */
 public interface NetClient {
 
-    byte[] sendRequest(byte[] data, Service service) throws InterruptedException;
-
     RpcResponse sendRequest(RpcRequest rpcRequest, Service service, MessageProtocol messageProtocol);
 }
