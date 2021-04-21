@@ -53,7 +53,6 @@ public class DefaultRpcProcessor implements ApplicationListener<ContextRefreshed
     }
 
     private void injectService(ApplicationContext context) {
-        //TODO 这个方法值得好好学习一下
         /*获取容器内所有JavaBean的名称*/
         String[] names = context.getBeanDefinitionNames();
         for (String name : names) {
