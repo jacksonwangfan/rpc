@@ -84,17 +84,10 @@ public class ClientProxyFactory {
             request.setMethod(method.getName());
             request.setParameters(args);
             request.setParameterTypes(method.getParameterTypes());
-            // 3.协议层编组
+            //序列化协议
             MessageProtocol messageProtocol = supportMessageProtocols.get(service.getProtocol());
             //发送请求并拿到结果
             RpcResponse response = netClient.sendRequest(request, service, messageProtocol);
-            // 编组请求
-//            byte[] reqData = messageProtocol.marshallingRequest(request);
-//            // 4. 调用网络层发送请求
-//            byte[] respData = netClient.sendRequest(reqData, service);
-//
-//            // 5. 解组响应消息
-//            RpcResponse response = messageProtocol.unmarshallingResponse(respData);
             if (response == null){
                 throw new RpcException("the response is null");
             }
@@ -102,7 +95,6 @@ public class ClientProxyFactory {
             if (response.getException() != null) {
                 return response.getException();
             }
-
             return response.getReturnValue();
         }
     }
