@@ -1,4 +1,4 @@
-package com.rpc.server;
+package com.rpc.server.NettyServer;
 
 import com.rpc.common.protocol.MessageProtocol;
 import com.rpc.common.model.RpcRequest;

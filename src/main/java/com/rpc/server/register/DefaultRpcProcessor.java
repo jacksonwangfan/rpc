@@ -7,7 +7,7 @@ import com.rpc.client.discovery.ZkChildListenerImpl;
 import com.rpc.client.discovery.ZookeeperServerDiscovery;
 import com.rpc.client.net.ClientProxyFactory;
 import com.rpc.common.constants.RpcConstant;
-import com.rpc.server.RpcServer;
+import com.rpc.server.NettyServer.RpcServer;
 import org.I0Itec.zkclient.ZkClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

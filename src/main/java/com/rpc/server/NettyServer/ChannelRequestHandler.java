@@ -1,4 +1,4 @@
-package com.rpc.server;
+package com.rpc.server.NettyServer;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import io.netty.buffer.ByteBuf;
