@@ -9,7 +9,7 @@ import com.rpc.common.protocol.MessageProtocol;
 import com.rpc.exception.RpcException;
 import com.rpc.properties.RpcConfig;
 import com.rpc.server.NettyRpcServer;
-import com.rpc.server.RequestHandler;
+import com.rpc.server.RequestInvokeHandler;
 import com.rpc.server.RpcServer;
 import com.rpc.server.register.DefaultRpcProcessor;
 import com.rpc.server.register.ServerRegister;
@@ -48,15 +48,15 @@ public class RpcAutoConfiguration {
     }
 
     @Bean
-    public RequestHandler requestHandler(@Autowired ServerRegister serverRegister,
-                                         @Autowired RpcConfig rpcConfig) {
-        return new RequestHandler(getMessageProtocol(rpcConfig.getProtocol()), serverRegister);
+    public RequestInvokeHandler requestHandler(@Autowired ServerRegister serverRegister,
+                                               @Autowired RpcConfig rpcConfig) {
+        return new RequestInvokeHandler(getMessageProtocol(rpcConfig.getProtocol()), serverRegister);
     }
 
     @Bean
-    public RpcServer rpcServer(@Autowired RequestHandler requestHandler,
+    public RpcServer rpcServer(@Autowired RequestInvokeHandler requestInvokeHandler,
                                @Autowired RpcConfig rpcConfig) {
-        return new NettyRpcServer(rpcConfig.getServerPort(), rpcConfig.getProtocol(), requestHandler);
+        return new NettyRpcServer(rpcConfig.getServerPort(), rpcConfig.getProtocol(), requestInvokeHandler);
     }
 
 

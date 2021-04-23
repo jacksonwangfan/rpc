@@ -121,7 +121,6 @@ public class ClientProxyFactory {
                 services = ServerDiscoveryCache.get(serviceName);
             }
         }
-        logger.info("获取到服务{}",services.toArray());
         return services;
     }
 

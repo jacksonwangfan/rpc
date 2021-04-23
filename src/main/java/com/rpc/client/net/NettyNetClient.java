@@ -43,10 +43,10 @@ public class NettyNetClient implements NetClient {
         synchronized (address) {
             if (connectedServerNodes.containsKey(address)) {
                 SendHandler handler = connectedServerNodes.get(address);
-                logger.info("使用现有的连接");
                 return handler.sendRequest(rpcRequest);
             }
             final SendHandler handler = getSendHandler(messageProtocol, address);
+            logger.info("连接已创建");
             return handler.sendRequest(rpcRequest);
         }
     }
@@ -58,6 +58,8 @@ public class NettyNetClient implements NetClient {
         final SendHandler handler = new SendHandler(messageProtocol, address);
         //将配置客户端的工作提交到线程池
         threadPool.submit(() -> {
+                    logger.info("新建TCP连接，目标地址：{}", address);
+                    long startTime = System.currentTimeMillis();
                     // 配置客户端
                     Bootstrap b = new Bootstrap();
                     b.group(loopGroup).channel(NioSocketChannel.class)
@@ -77,9 +79,11 @@ public class NettyNetClient implements NetClient {
                             connectedServerNodes.put(address, handler);
                         }
                     });
+                    long endTime = System.currentTimeMillis();
+                    logger.info("连接已建立，耗费时间：{}s", TimeUnit.MILLISECONDS.toSeconds(endTime - startTime));
                 }
         );
-        logger.info("使用新的连接。。。");
+        logger.info("使用新的连接");
         return handler;
     }
 }

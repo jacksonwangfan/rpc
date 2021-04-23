@@ -30,7 +30,7 @@ public class SendHandler extends ChannelInboundHandlerAdapter {
     /**
      * 等待通道建立最大时间
      */
-    static final int CHANNEL_WAIT_TIME = 4;
+    static final int CHANNEL_WAIT_TIME = 10;
     /**
      * 等待响应最大时间
      */

@@ -16,12 +16,12 @@ public abstract class RpcServer {
     /**
      * 请求处理者
      */
-    protected RequestHandler requestHandler;
+    protected RequestInvokeHandler requestInvokeHandler;
 
-    public RpcServer(int port, String protocol, RequestHandler requestHandler) {
+    public RpcServer(int port, String protocol, RequestInvokeHandler requestInvokeHandler) {
         this.port = port;
         this.protocol = protocol;
-        this.requestHandler = requestHandler;
+        this.requestInvokeHandler = requestInvokeHandler;
     }
 
     /**
@@ -50,11 +50,11 @@ public abstract class RpcServer {
         this.protocol = protocol;
     }
 
-    public RequestHandler getRequestHandler() {
-        return requestHandler;
+    public RequestInvokeHandler getRequestInvokeHandler() {
+        return requestInvokeHandler;
     }
 
-    public void setRequestHandler(RequestHandler requestHandler) {
-        this.requestHandler = requestHandler;
+    public void setRequestInvokeHandler(RequestInvokeHandler requestInvokeHandler) {
+        this.requestInvokeHandler = requestInvokeHandler;
     }
 }
