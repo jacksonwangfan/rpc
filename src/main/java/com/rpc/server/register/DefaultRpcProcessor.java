@@ -96,7 +96,9 @@ public class DefaultRpcProcessor implements ApplicationListener<ContextRefreshed
 
     private void startServer(ApplicationContext context) {
         Map<String, Object> beans = context.getBeansWithAnnotation(Service.class);
-        logger.info("发现"+beans.size()+"个RpcServices");
+        if (0 != beans.size()){
+            logger.info("发现"+beans.size()+"个RpcServices");
+        }
         if (beans.size() > 0) {
             boolean startServerFlag = true;
             for (Object obj : beans.values()) {
