@@ -30,9 +30,11 @@ public class SmoothWeightRoundBalance implements com.rpc.client.balance.LoadBala
         Service maxWeightServer = null;
         //同一个服务所有实例权重的和
         int allWeight = services.stream().mapToInt(Service::getWeight).sum();
+        //遍历所有服务实例
         for (Service service : services) {
+            //拿到的服务实例的权重
             Integer currentWeight = map.get(service.toString());
-
+            //如果当前权重比最大权重要大，返回service
             if (maxWeightServer == null || currentWeight > map.get(maxWeightServer.toString())) {
                 maxWeightServer = service;
             }
