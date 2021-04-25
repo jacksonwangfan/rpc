@@ -38,6 +38,11 @@ public class RpcAutoConfiguration {
         return new RpcConfig();
     }
 
+    /**
+     * 实例化服务注册者
+     * @param rpcConfig
+     * @return
+     */
     @Bean
     public ServerRegister serverRegister(@Autowired RpcConfig rpcConfig) {
         return new ZookeeperServerRegister(
@@ -47,12 +52,24 @@ public class RpcAutoConfiguration {
                 rpcConfig.getWeight());
     }
 
+    /**
+     * 实例化请求处理器
+     * @param serverRegister
+     * @param rpcConfig
+     * @return
+     */
     @Bean
     public RequestInvokeHandler requestHandler(@Autowired ServerRegister serverRegister,
                                                @Autowired RpcConfig rpcConfig) {
         return new RequestInvokeHandler(getMessageProtocol(rpcConfig.getProtocol()), serverRegister);
     }
 
+    /**
+     * 实例化RPC Server,每个服务都有一个RCP Server
+     * @param requestInvokeHandler
+     * @param rpcConfig
+     * @return
+     */
     @Bean
     public RpcServer rpcServer(@Autowired RequestInvokeHandler requestInvokeHandler,
                                @Autowired RpcConfig rpcConfig) {
@@ -134,6 +151,13 @@ public class RpcAutoConfiguration {
         throw new RpcException("invalid load balance config");
     }
 
+    /**
+     * 实例化RPC框架中的注解处理器，扫描我们的自定注解，作出相应的处理
+     * @param clientProxyFactory
+     * @param serverRegister
+     * @param rpcServer
+     * @return
+     */
     @Bean
     public DefaultRpcProcessor rpcProcessor(@Autowired ClientProxyFactory clientProxyFactory,
                                             @Autowired ServerRegister serverRegister,
