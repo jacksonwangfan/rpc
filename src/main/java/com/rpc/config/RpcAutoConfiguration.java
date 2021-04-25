@@ -1,7 +1,7 @@
 package com.rpc.config;
 
-import com.rpc.annotation.LoadBalance;
 import com.rpc.annotation.MessageProtocolAno;
+import com.rpc.client.balance.LoadBalance;
 import com.rpc.client.discovery.ZookeeperServerDiscovery;
 import com.rpc.client.net.ClientProxyFactory;
 import com.rpc.client.net.NettyNetClient;
@@ -90,7 +90,7 @@ public class RpcAutoConfiguration {
         Map<String, MessageProtocol> supportMessageProtocols = buildSupportMessageProtocols();
         clientProxyFactory.setSupportMessageProtocols(supportMessageProtocols);
         // 设置负载均衡算法
-        com.rpc.client.balance.LoadBalance loadBalance = getLoadBalance(rpcConfig.getLoadBalance());
+        LoadBalance loadBalance = getLoadBalance(rpcConfig.getLoadBalance());
         clientProxyFactory.setLoadBalance(loadBalance);
         // 设置网络层实现
         clientProxyFactory.setNetClient(new NettyNetClient());
@@ -137,12 +137,12 @@ public class RpcAutoConfiguration {
      * @param name
      * @return
      */
-    private com.rpc.client.balance.LoadBalance getLoadBalance(String name) {
+    private LoadBalance getLoadBalance(String name) {
         ServiceLoader<com.rpc.client.balance.LoadBalance> loader = ServiceLoader.load(com.rpc.client.balance.LoadBalance.class);
         Iterator<com.rpc.client.balance.LoadBalance> iterator = loader.iterator();
         while (iterator.hasNext()) {
             com.rpc.client.balance.LoadBalance loadBalance = iterator.next();
-            LoadBalance ano = loadBalance.getClass().getAnnotation(LoadBalance.class);
+            com.rpc.annotation.LoadBalance ano = loadBalance.getClass().getAnnotation(com.rpc.annotation.LoadBalance.class);
             Assert.notNull(ano, "load balance name can not be empty!");
             if (name.equals(ano.value())) {
                 return loadBalance;
