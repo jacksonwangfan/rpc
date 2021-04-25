@@ -28,10 +28,16 @@ public class NettyRpcServer extends RpcServer {
         EventLoopGroup workerGroup = new NioEventLoopGroup();
         try {
             ServerBootstrap b = new ServerBootstrap();
+            //配置接受连接线程组，配置读写io的线程组
             b.group(bossGroup, workerGroup)
+                    //设置服务器端通道的一个实现
                     .channel(NioServerSocketChannel.class)
+                    //设置可连接队列大小为100
                     .option(ChannelOption.SO_BACKLOG, 100)
-                    .handler(new LoggingHandler(LogLevel.INFO)).childHandler(new ChannelInitializer<SocketChannel>() {
+                    //添加出入站的Handler记录服务日志
+                    .handler(new LoggingHandler(LogLevel.INFO))
+                    //添加入站处理规则
+                    .childHandler(new ChannelInitializer<SocketChannel>() {
 
                 @Override
                 protected void initChannel(SocketChannel ch) throws Exception {
@@ -39,7 +45,6 @@ public class NettyRpcServer extends RpcServer {
                     pipeline.addLast(new ChannelRequestHandler(requestInvokeHandler));
                 }
             });
-
             // 启动服务
             ChannelFuture future = b.bind(port).sync();
             logger.debug("Server started successfully.");
@@ -53,6 +58,7 @@ public class NettyRpcServer extends RpcServer {
             // 释放线程组资源
             bossGroup.shutdownGracefully();
             workerGroup.shutdownGracefully();
+            logger.info("netty server stop successful");
         }
     }
 
