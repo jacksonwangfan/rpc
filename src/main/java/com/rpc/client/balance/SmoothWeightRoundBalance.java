@@ -21,7 +21,6 @@ public class SmoothWeightRoundBalance implements com.rpc.client.balance.LoadBala
 
     @Override
     public synchronized Service chooseOne(List<Service> services) {
-        //todo 这里加权轮训，每次只用算一次，然后将计算出来的加权轮训结果缓存起来，不用选则实例的时候都计算一次，浪费性能。
         //将服务以及权重放入map
         services.forEach(service ->
                 map.computeIfAbsent(service.toString(), key -> service.getWeight())

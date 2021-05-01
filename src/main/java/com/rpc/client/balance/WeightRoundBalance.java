@@ -16,6 +16,7 @@ public class WeightRoundBalance implements com.rpc.client.balance.LoadBalance {
 
     @Override
     public synchronized Service chooseOne(List<Service> services) {
+        //获取服务的总权重
         int allWeight = services.stream().mapToInt(Service::getWeight).sum();
         int number = (index++) % allWeight;
         for(Service service : services){
