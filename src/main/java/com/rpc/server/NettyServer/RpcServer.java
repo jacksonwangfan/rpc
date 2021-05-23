@@ -1,5 +1,7 @@
 package com.rpc.server.NettyServer;
 
+import com.rpc.server.handlers.RequestProcesser;
+
 /**
  * Rpc服务端抽象类
  */
@@ -16,12 +18,12 @@ public abstract class RpcServer {
     /**
      * 请求处理者
      */
-    protected RequestInvokeHandler requestInvokeHandler;
+    protected RequestProcesser requestProcesser;
 
-    public RpcServer(int port, String protocol, RequestInvokeHandler requestInvokeHandler) {
+    public RpcServer(int port, String protocol, RequestProcesser requestProcesser) {
         this.port = port;
         this.protocol = protocol;
-        this.requestInvokeHandler = requestInvokeHandler;
+        this.requestProcesser = requestProcesser;
     }
 
     /**
@@ -50,11 +52,11 @@ public abstract class RpcServer {
         this.protocol = protocol;
     }
 
-    public RequestInvokeHandler getRequestInvokeHandler() {
-        return requestInvokeHandler;
+    public RequestProcesser getRequestProcesser() {
+        return requestProcesser;
     }
 
-    public void setRequestInvokeHandler(RequestInvokeHandler requestInvokeHandler) {
-        this.requestInvokeHandler = requestInvokeHandler;
+    public void setRequestProcesser(RequestProcesser requestProcesser) {
+        this.requestProcesser = requestProcesser;
     }
 }

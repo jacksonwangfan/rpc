@@ -1,4 +1,4 @@
-package com.rpc.server.NettyServer;
+package com.rpc.server.handlers;
 
 import com.rpc.common.protocol.MessageProtocol;
 import com.rpc.common.model.RpcRequest;
@@ -13,14 +13,13 @@ import java.lang.reflect.Method;
  *
  * 请求处理者，提供解组请求、编组响应等操作
  */
-public class RequestInvokeHandler {
+public class RequestProcesser {
 
     private MessageProtocol protocol;
 
-
     private ServerRegister serverRegister;
 
-    public RequestInvokeHandler(MessageProtocol protocol, ServerRegister serverRegister) {
+    public RequestProcesser(MessageProtocol protocol, ServerRegister serverRegister) {
         this.protocol = protocol;
         this.serverRegister = serverRegister;
     }
@@ -29,15 +28,11 @@ public class RequestInvokeHandler {
     public byte[] handleRequest(byte[] data) throws Exception {
         // 1.解组消息
         RpcRequest req = this.protocol.unmarshallingRequest(data);
-
-        // 2.查找服务对应
+        // 2.查找服务对应,校验对用存在的服务
         ServiceObject so = serverRegister.getServiceObject(req.getServiceName());
-
         RpcResponse response = null;
-
         if (so == null){
             response = new RpcResponse(RpcStatusEnum.NOT_FOUND);
-
         }else {
             try {
                 // 3.反射调用对应的方法过程

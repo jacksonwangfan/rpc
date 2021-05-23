@@ -1,4 +1,4 @@
-package com.rpc.server.NettyServer;
+package com.rpc.server.handlers;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import io.netty.buffer.ByteBuf;
@@ -16,10 +16,10 @@ import java.util.concurrent.TimeUnit;
 
 public class ChannelRequestHandler extends ChannelInboundHandlerAdapter {
 
-    private RequestInvokeHandler requestInvokeHandler;
+    private RequestProcesser requestProcesser;
 
-    public ChannelRequestHandler(RequestInvokeHandler requestInvokeHandler){
-        this.requestInvokeHandler = requestInvokeHandler;
+    public ChannelRequestHandler(RequestProcesser requestProcesser){
+        this.requestProcesser = requestProcesser;
     }
 
     private static final ExecutorService pool = new ThreadPoolExecutor(4, 8,
@@ -45,7 +45,7 @@ public class ChannelRequestHandler extends ChannelInboundHandlerAdapter {
                 byteBuf.readBytes(reqData);
                 // 手动回收
                 ReferenceCountUtil.release(byteBuf);
-                byte[] respData = requestInvokeHandler.handleRequest(reqData);
+                byte[] respData = requestProcesser.handleRequest(reqData);
                 ByteBuf respBuf = Unpooled.buffer(respData.length);
                 respBuf.writeBytes(respData);
                 logger.debug("Send response:{}", respBuf);

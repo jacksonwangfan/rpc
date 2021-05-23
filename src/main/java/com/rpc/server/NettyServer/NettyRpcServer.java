@@ -1,5 +1,8 @@
 package com.rpc.server.NettyServer;
 
+import com.rpc.server.handlers.ChannelRequestHandler;
+import com.rpc.server.handlers.RequestProcesser;
+import com.rpc.server.handlers.RpcChannelInitializer;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -17,8 +20,8 @@ public class NettyRpcServer extends RpcServer {
 
     private Channel channel;
 
-    public NettyRpcServer(int port, String protocol, RequestInvokeHandler requestInvokeHandler) {
-        super(port, protocol, requestInvokeHandler);
+    public NettyRpcServer(int port, String protocol, RequestProcesser requestProcesser) {
+        super(port, protocol, requestProcesser);
     }
 
     @Override
@@ -37,14 +40,7 @@ public class NettyRpcServer extends RpcServer {
                     //添加出入站的Handler记录服务日志
                     .handler(new LoggingHandler(LogLevel.INFO))
                     //添加入站处理规则
-                    .childHandler(new ChannelInitializer<SocketChannel>() {
-
-                @Override
-                protected void initChannel(SocketChannel ch) throws Exception {
-                    ChannelPipeline pipeline = ch.pipeline();
-                    pipeline.addLast(new ChannelRequestHandler(requestInvokeHandler));
-                }
-            });
+                    .childHandler(new RpcChannelInitializer(requestProcesser));
             // 启动服务
             ChannelFuture future = b.bind(port).sync();
             logger.debug("Server started successfully.");

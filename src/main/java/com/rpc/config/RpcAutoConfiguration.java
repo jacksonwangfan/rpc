@@ -9,7 +9,7 @@ import com.rpc.common.protocol.MessageProtocol;
 import com.rpc.exception.RpcException;
 import com.rpc.properties.RpcConfig;
 import com.rpc.server.NettyServer.NettyRpcServer;
-import com.rpc.server.NettyServer.RequestInvokeHandler;
+import com.rpc.server.handlers.RequestProcesser;
 import com.rpc.server.NettyServer.RpcServer;
 import com.rpc.server.register.DefaultRpcProcessor;
 import com.rpc.server.register.ServerRegister;
@@ -59,21 +59,21 @@ public class RpcAutoConfiguration {
      * @return
      */
     @Bean
-    public RequestInvokeHandler requestHandler(@Autowired ServerRegister serverRegister,
-                                               @Autowired RpcConfig rpcConfig) {
-        return new RequestInvokeHandler(getMessageProtocol(rpcConfig.getProtocol()), serverRegister);
+    public RequestProcesser requestHandler(@Autowired ServerRegister serverRegister,
+                                           @Autowired RpcConfig rpcConfig) {
+        return new RequestProcesser(getMessageProtocol(rpcConfig.getProtocol()), serverRegister);
     }
 
     /**
      * 实例化RPC Server,每个服务都有一个RCP Server
-     * @param requestInvokeHandler
+     * @param requestProcesser
      * @param rpcConfig
      * @return
      */
     @Bean
-    public RpcServer rpcServer(@Autowired RequestInvokeHandler requestInvokeHandler,
+    public RpcServer rpcServer(@Autowired RequestProcesser requestProcesser,
                                @Autowired RpcConfig rpcConfig) {
-        return new NettyRpcServer(rpcConfig.getServerPort(), rpcConfig.getProtocol(), requestInvokeHandler);
+        return new NettyRpcServer(rpcConfig.getServerPort(), rpcConfig.getProtocol(), requestProcesser);
     }
 
 
