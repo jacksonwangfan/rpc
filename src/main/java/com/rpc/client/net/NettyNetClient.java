@@ -34,12 +34,12 @@ public class NettyNetClient implements NetClient {
      * 已连接的服务缓存
      * key: 服务地址，格式：ip:port
      */
-    public static Map<String, SendHandler> connectedServerNodes = new ConcurrentHashMap<>();
+    public static volatile Map<String, SendHandler> connectedServerNodes = new ConcurrentHashMap<>();
 
     @Override
     public RpcResponse sendRequest(RpcRequest rpcRequest, Service service, MessageProtocol messageProtocol) {
         String address = service.getAddress();
-        //这里锁加的有待优化
+        //避免对同一个服务创建了很多的链接
         synchronized (address) {
             if (connectedServerNodes.containsKey(address)) {
                 SendHandler handler = connectedServerNodes.get(address);

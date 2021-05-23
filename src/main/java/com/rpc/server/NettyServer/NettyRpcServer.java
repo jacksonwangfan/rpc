@@ -25,7 +25,7 @@ public class NettyRpcServer extends RpcServer {
     public void start() {
         // 配置服务器
         EventLoopGroup bossGroup = new NioEventLoopGroup(1);
-        EventLoopGroup workerGroup = new NioEventLoopGroup();
+        EventLoopGroup workerGroup = new NioEventLoopGroup(4);
         try {
             ServerBootstrap b = new ServerBootstrap();
             //配置接受连接线程组，配置读写io的线程组
