@@ -10,7 +10,7 @@ import java.util.List;
  * 加权轮询
  */
 @LoadBalance(RpcConstant.BALANCE_WEIGHT_ROUND)
-public class WeightRoundBalance implements com.rpc.client.balance.LoadBalance {
+public class WeightRoundBalance implements com.rpc.client.balance.LoadBalance<Service> {
 
     private volatile static int index;
 

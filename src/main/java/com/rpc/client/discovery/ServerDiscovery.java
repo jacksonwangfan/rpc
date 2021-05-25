@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * 服务发现抽象类
  */
-public interface ServerDiscovery {
+public interface ServerDiscovery<T> {
 
-    List<Service> findServiceListByRegisterCenter(String name);
+    List<T> findServiceListByRegisterCenter(String name);
 }

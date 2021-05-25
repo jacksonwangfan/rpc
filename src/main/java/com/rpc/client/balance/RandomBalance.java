@@ -11,7 +11,7 @@ import java.util.Random;
  * 随机算法
  */
 @LoadBalance(RpcConstant.BALANCE_RANDOM)
-public class RandomBalance implements com.rpc.client.balance.LoadBalance {
+public class RandomBalance implements com.rpc.client.balance.LoadBalance<Service> {
 
     private static Random random = new Random();
 

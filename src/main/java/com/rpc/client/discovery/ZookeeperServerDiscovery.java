@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 /**
  * 从zookeeper获取服务信息
  */
-public class ZookeeperServerDiscovery implements ServerDiscovery {
+public class ZookeeperServerDiscovery implements ServerDiscovery<Service> {
 
     private ZkClient zkClient;
 

@@ -13,7 +13,7 @@ import java.util.Map;
  * 平滑加权轮询
  */
 @LoadBalance(RpcConstant.BALANCE_SMOOTH_WEIGHT_ROUND)
-public class SmoothWeightRoundBalance implements com.rpc.client.balance.LoadBalance {
+public class SmoothWeightRoundBalance implements com.rpc.client.balance.LoadBalance<Service> {
     /**
      * key:服务value:当前权重
      */
