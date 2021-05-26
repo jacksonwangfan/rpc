@@ -7,7 +7,6 @@ import com.rpc.client.net.ClientProxyFactory;
 import com.rpc.client.net.NettyNetClient;
 import com.rpc.common.protocol.MessageProtocol;
 import com.rpc.exception.RpcException;
-import com.rpc.properties.RpcConfig;
 import com.rpc.server.NettyServer.NettyRpcServer;
 import com.rpc.server.handlers.RequestProcesser;
 import com.rpc.server.NettyServer.RpcServer;
