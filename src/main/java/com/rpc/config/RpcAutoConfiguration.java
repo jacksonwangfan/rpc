@@ -84,7 +84,7 @@ public class RpcAutoConfiguration {
     @Bean
     public ClientProxyFactory proxyFactory(@Autowired RpcConfig rpcConfig) {
         ClientProxyFactory clientProxyFactory = new ClientProxyFactory();
-        // 设置服务发现着
+        // 设置服务发现者
         clientProxyFactory.setServerDiscovery(new ZookeeperServerDiscovery(rpcConfig.getRegisterAddress()));
         // SPI机制设置支持的协议
         Map<String, MessageProtocol> supportMessageProtocols = buildSupportMessageProtocols();
